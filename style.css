@@ -1,0 +1,134 @@
+:root {
+  --rotate_rock: rotate(0deg); /*20deg */
+  --rotate_paper: rotate(0deg); /*-25deg */
+  --rotate_scissors: rotate(0deg); /*30deg */
+  --transition_time: 0.3s;
+}
+
+body {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  background-color: beige;
+  margin: 0px;
+  padding: 0px 20px 0px 20px;
+}
+
+.title {
+  text-align: center;
+}
+
+.details {
+  display: flex;
+  justify-content: space-between;
+}
+
+.status-text {
+  text-align: center;
+  height: 30px;
+}
+
+.reset-button {
+  background: none;
+  border: none;
+  color: white;
+  background-color: rgb(0, 0, 0);
+  padding: 10px 15px 10px 15px;
+  border-radius: 50px;
+  cursor: pointer;
+}
+
+.main {
+  position: relative;
+  height: 350px;
+  /* border: 5px solid black; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.boxes {
+  /* border: 5px solid red; */
+  height: 60%;
+  width: 52%;
+  display: flex;
+  /* overflow: hidden; */
+  /* border-radius: 7px; */
+  justify-content: space-between;
+}
+
+.overlay-div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0); /* Adjust the transparency as needed */
+  z-index: -1;
+}
+
+img {
+  height: 100%;
+  width: 33%;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.rock-tile {
+  z-index: 1;
+  transform: rotate(0deg) scale(1) translate(0%, 0%);
+  transition: 0.3s;
+}
+
+.paper-tile {
+  z-index: 1;
+  transform: rotate(0deg) scale(1) translate(0%, 0%);
+  transition: 0.3s;
+}
+
+.scissors-tile {
+  z-index: 1;
+  /* create a variable with rotate(30deg) in it */
+  transform: rotate(0deg) scale(1) translate(0%, 0%);
+  transition: 0.3s;
+}
+
+@keyframes rotateRock {
+  from {
+    transform: translate(100%, 0%) scale(1.2) rotate(0deg);
+  }
+  to {
+    transform: translate(100%, 0%) scale(1.2) rotate(360deg);
+  }
+}
+
+@keyframes rotatePaperAntiClock {
+  from {
+    transform: translate(0%, 0%) scale(1.2) rotate(360deg);
+  }
+  to {
+    transform: translate(0%, 0%) scale(1.2) rotate(0deg);
+  }
+}
+@keyframes rotatePaperClock {
+  from {
+    transform: translate(0%, 0%) scale(1.2) rotate(0deg);
+  }
+  to {
+    transform: translate(0%, 0%) scale(1.2) rotate(360deg);
+  }
+}
+@keyframes rotateScissorsAntiClock {
+  from {
+    transform: translate(-100%, 0%) scale(1.2) rotate(360deg);
+  }
+  to {
+    transform: translate(-100%, 0%) scale(1.2) rotate(0deg);
+  }
+}
+@keyframes rotateScissorsClock {
+  from {
+    transform: translate(-100%, 0%) scale(1.2) rotate(0deg);
+  }
+  to {
+    transform: translate(-100%, 0%) scale(1.2) rotate(360deg);
+  }
+}
