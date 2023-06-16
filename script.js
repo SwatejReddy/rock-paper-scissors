@@ -6,6 +6,8 @@ const resetButton = document.querySelector(".reset-button")
 const computerScoreElement = document.querySelector(".computer-score");
 const playerScoreElement = document.querySelector(".player-score");
 const overlayDiv = document.querySelector(".overlay-div");
+const popupText = document.querySelector(".popup-text");
+
 
 let playerChoice;
 let computerChoice;
@@ -86,15 +88,22 @@ function startRotation(rock, paper, scissors, selectedElement, playerChoice){
                 //scale the bid element to 1x.
                 bid.style.transform = "rotate(0deg) scale(1) translate(0%, 0%)"; 
                 if(computerScore == 3){
-                    statusText.innerText = "Oh! looks like computer had better luck this time :("
+                    statusText.innerText = "Oh! looks like computer had better luck this time :(";
                 }
                 else if(playerScore == 3){
-                    statusText.innerText = "Congratulations! you won!"
+                    statusText.innerText = "Congratulations! you won!";
                 }
-                else{
-                    enableClickableElements();
-                }
+                // else{
+                //     enableClickableElements();
+                // }
             }, 1500);
+        }
+
+        //wait till the selected bid popup is over to enable click for user again.
+        if(computerScore < 2 && playerScore < 2){
+            setTimeout(() => {
+                enableClickableElements();
+            }, 1510);
         }
         
     }, 2010);
@@ -114,6 +123,10 @@ function resetBlocks(rock, paper, scissors){
 
 function evaluateScore(computerChoice, playerChoice){
     if(flag == 1){
+        
+        //store compscore and playerscore before updating it.
+        let prevCompScore = computerScore;
+        let prevPlayerScore = playerScore;
 
         if(computerChoice === playerChoice){
             // Show a tie message.
@@ -142,7 +155,41 @@ function evaluateScore(computerChoice, playerChoice){
                 playerScore += 1;
             }
         }
-    
+
+        if(computerScore == 2){
+            disableClickableElements();
+        }
+        if(playerScore == 2){
+            disableClickableElements();
+        }
+        //check if computerscore or playerscore has increased from the before round and then throw a +1 popup for whichever is increased.
+        if(computerScore > prevCompScore){
+            popupText.innerText = "+1 Computer";
+            popupText.style.animation = "popup 1.5s linear";
+            //reset animation and text after the animation ends.
+            popupText.addEventListener("animationend", function(){
+                popupText.style.animation = "";
+                popupText.innerText = "";
+            })
+        }
+        else if(playerScore > prevPlayerScore){
+            popupText.innerText = "+1 Player";;
+            popupText.style.animation = "popup 1.5s linear";
+            //reset animation and text after the animation ends.
+            popupText.addEventListener("animationend", function(){
+                popupText.style.animation = "";
+                popupText.innerText = "";
+            })
+        }
+        else{
+            popupText.innerText = "It's a tie!";;
+            popupText.style.animation = "popup 1.5s linear";
+            //reset animation and text after the animation ends.
+            popupText.addEventListener("animationend", function(){
+                popupText.style.animation = "";
+                popupText.innerText = "";
+            })
+        }
         computerScoreElement.innerText = computerScore;
         playerScoreElement.innerText = playerScore;
     }
@@ -197,18 +244,29 @@ scissorsTile.addEventListener("click", function() {
 })
 
 resetButton.addEventListener("click", function(){
-    //flag --> false, takes back access to everything that was meant to happen after that.
+    //flag --> false, takes back access to everything that was meant to happen after that adn stops everything.
+    //flag becomes 0 when the match is over.
     flag = 0;
-    enableClickableElements();
     //stop the animation and bring the animation to the start position.
     stopRotation(rockTile, paperTile, scissorsTile);
     resetBlocks(rockTile, paperTile, scissorsTile);
     //Reset computer score to 0.
+    computerScore = 0;
     computerScoreElement.innerText = "0";
     //Reset player score to 0.
+    playerScore = 0;
     playerScoreElement.innerText = "0";
     //Reset the status text.
     statusText.innerText = "Start playing! Make the first choice!"
+    //Reset the popupText.
+    popupText.style.animation = "";
+    popupText.innerText = "";
+    //make flag --> true so that the next cycle of things that we stopped can start and continue till the next match ends.
+    // flag = 1;
+    setTimeout(() => {
+        flag = 1;
+    }, 1510);
+    enableClickableElements();
 })
 
 
