@@ -100,7 +100,7 @@ function startRotation(rock, paper, scissors, selectedElement, playerChoice){
         }
 
         //wait till the selected bid popup is over to enable click for user again.
-        if(computerScore < 2 && playerScore < 2){
+        if(computerScore < 3 && playerScore < 3{
             setTimeout(() => {
                 enableClickableElements();
             }, 1510);
