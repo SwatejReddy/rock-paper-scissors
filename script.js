@@ -26,7 +26,6 @@ function generateBid(){
     return generatedBid;
 }
 
-const totalRounds = 5;
 let remainingRounds;
 
 function startRotation(rock, paper, scissors, selectedElement, playerChoice){
